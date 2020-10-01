@@ -1,6 +1,7 @@
 class TodosController < ApplicationController
 
     def show
+        #grabs todo item from the id in url
         @todo = Todo.find(params[:id])
     end
 
@@ -15,6 +16,20 @@ class TodosController < ApplicationController
             redirect_to todo_path(@todo) #redirect to newly created obj
         else
              render 'new'
+        end
+    end
+
+    def edit
+        @todo = Todo.find(params[:id])
+    end
+
+    def update
+        @todo = Todo.new(todo_params)
+        if @todo.save
+            flash[:notice] = 'Todo was successfully updated'
+            redirect_to todo_path(@todo)
+        else   
+            render 'edit'
         end
     end
 
