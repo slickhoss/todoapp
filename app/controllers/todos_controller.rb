@@ -1,5 +1,9 @@
 class TodosController < ApplicationController
 
+    def index
+        @todos = Todo.all
+    end
+
     def show
         #grabs todo item from the id in url
         @todo = Todo.find(params[:id])
