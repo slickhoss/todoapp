@@ -1,4 +1,5 @@
 class TodosController < ApplicationController
+    before_action :set_todo, only: [:show, :edit, :update, :destroy]
 
     def index
         @todos = Todo.all
@@ -6,7 +7,6 @@ class TodosController < ApplicationController
 
     def show
         #grabs todo item from the id in url
-        @todo = Todo.find(params[:id])
     end
 
     def new
@@ -24,11 +24,11 @@ class TodosController < ApplicationController
     end
 
     def edit
-        @todo = Todo.find(params[:id])
+        #@todo = Todo.find(params[:id])
     end
 
     def update
-        @todo = Todo.new(todo_params)
+        #@todo = Todo.new(todo_params)
         if @todo.save
             flash[:notice] = 'Todo was successfully updated'
             redirect_to todo_path(@todo)
@@ -38,7 +38,7 @@ class TodosController < ApplicationController
     end
 
     def destroy
-        @todo = Todo.find(params[:id])
+        #@todo = Todo.find(params[:id])
         @todo.destroy
         flash[:notice] = 'Todo was deleted successfully'
         redirect_to todos_path
@@ -47,6 +47,10 @@ class TodosController < ApplicationController
     #whitelist parameters passed into create method
     private def todo_params
         params.require(:todo).permit(:name, :description)
+    end
+
+    private def set_todo
+        @todo = Todo.find(params[:id])
     end
 
 end
